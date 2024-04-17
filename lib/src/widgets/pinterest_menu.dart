@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_unnecessary_containers, avoid_print
 
 import 'package:flutter/material.dart';
 
@@ -13,37 +13,50 @@ class PinterestButton {
 
 class PinterestMenu extends StatelessWidget {
   final List<PinterestButton> items = [
-    PinterestButton(onPressed: (){print('Icon pie_chart');}, icon: Icons.pie_chart),
-    PinterestButton(onPressed: (){print('Icon search');}, icon: Icons.search),
-    PinterestButton(onPressed: (){print('Icon notifications');}, icon: Icons.notifications),
-    PinterestButton(onPressed: (){print('Icon supervised_user_circle');}, icon: Icons.supervised_user_circle),
+    PinterestButton(icon: Icons.pie_chart, onPressed: (){print('Icon pie_chart');}),
+    PinterestButton(icon: Icons.search, onPressed: (){print('Icon search');}),
+    PinterestButton(icon: Icons.notifications, onPressed: (){print('Icon notifications');}),
+    PinterestButton(icon: Icons.supervised_user_circle, onPressed:(){print('Icon supervised_user_circle');}),
   ];
   PinterestMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      // ignore: avoid_unnecessary_containers
-      child: Container(
-        
-        width: 250,
-        height: 50,
-        decoration: const BoxDecoration(
-          color: Colors.white, 
-          borderRadius: BorderRadius.all(Radius.circular(100)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Colors.black38,
-              blurRadius: 10,
-              spreadRadius: -5
-            )            
-          ] 
-        ),
-        
+      child: _PinterestMenuBackground(
         child: _MenuItems(menuItems: items),
       )
     ); 
    }
+}
+
+class _PinterestMenuBackground extends StatelessWidget {
+  
+  final Widget child;
+  
+  const _PinterestMenuBackground({
+    required this.child
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(        
+      width: 250,
+      height: 50,
+      decoration: const BoxDecoration(
+        color: Colors.white, 
+        borderRadius: BorderRadius.all(Radius.circular(100)),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.black38,
+            blurRadius: 10,
+            spreadRadius: -5
+          )            
+        ] 
+      ),
+      child: child,
+    );
+  }
 }
 
 
@@ -76,10 +89,14 @@ class _PinterestMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: item.onPressed(),
-    // ignore: avoid_unnecessary_containers
+      onTap:(){print(item.onPressed);} ,
+      behavior: HitTestBehavior.translucent,
       child: Container(
-        child: Icon(item.icon),
+        child: Icon(
+          item.icon,
+          size: 27,
+          color: Colors.pink,
+        ),
       ),
     );
   }
